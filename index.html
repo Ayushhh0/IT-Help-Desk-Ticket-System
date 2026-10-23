@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IT Help Desk</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>IT Help Desk</h1>
+    <p>Manage and track support requests</p>
+  </header>
+
+  <main>
+    <section class="dashboard">
+      <div>
+        <h2>Support Dashboard</h2>
+        <p>Total Tickets: <strong id="total-tickets">0</strong></p>
+      </div>
+      <div class="stats-container">
+  <div class="stat-card open-card">
+    <h3>Open Tickets</h3>
+    <p id="open-count">0</p>
+  </div>
+
+  <div class="stat-card progress-card">
+    <h3>In Progress</h3>
+    <p id="progress-count">0</p>
+  </div>
+
+  <div class="stat-card resolved-card">
+    <h3>Resolved Tickets</h3>
+    <p id="resolved-count">0</p>
+  </div>
+</div>
+      <button id="new-ticket-btn">+ New Ticket</button>
+    </section>
+
+<!-- Dashboard Charts -->
+<section class="dashboard-charts">
+  <div class="chart-card">
+    <h3>Tickets by Status</h3>
+    <canvas id="statusChart"></canvas>
+  </div>
+
+  <div class="chart-card">
+    <h3>Tickets by Priority</h3>
+    <canvas id="priorityChart"></canvas>
+  </div>
+</section>
+
+    <section id="ticket-form-section" class="panel" hidden>
+      <h2>Create a Ticket</h2>
+
+      <form id="ticket-form">
+        <label for="full-name">Full Name *</label>
+        <input id="full-name" name="fullName"
+               type="text" required>
+
+        <label for="email">Email Address *</label>
+        <input id="email" name="email"
+               type="email" required>
+
+        <label for="category">Issue Type *</label>
+        <select id="category" name="category" required>
+          <option value="">Choose an issue</option>
+          <option>Computer / Laptop</option>
+          <option>Network / Wi-Fi</option>
+          <option>Software / Application</option>
+          <option>Account / Password</option>
+          <option>Other</option>
+        </select>
+
+        <label for="priority">Priority *</label>
+        <select id="priority" name="priority" required>
+          <option value="Low">Low</option>
+          <option value="Medium" selected>Medium</option>
+          <option value="High">High</option>
+        </select>
+
+        <label for="description">Problem Description *</label>
+        <textarea id="description" name="description"
+                  rows="4" required
+                  placeholder="Describe the problem..."></textarea>
+
+        <div class="form-buttons">
+          <button type="submit">Submit Ticket</button>
+          <button type="button" id="cancel-btn" class="secondary">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2>All Tickets</h2>
+      
+<div class="ticket-filters">
+  <input
+    type="text"
+    id="search-ticket"
+    placeholder="Search by ticket ID, name, or issue..."
+  >
+
+  <select id="filter-status">
+    <option value="All">All Statuses</option>
+    <option value="Open">Open</option>
+    <option value="In Progress">In Progress</option>
+    <option value="Resolved">Resolved</option>
+  </select>
+
+  <select id="filter-priority">
+    <option value="All">All Priorities</option>
+    <option value="Low">Low</option>
+    <option value="Medium">Medium</option>
+    <option value="High">High</option>
+  </select>
+  <label for="sort-tickets">Sort Tickets:</label>
+<select id="sort-tickets">
+  <option value="newest">Newest First</option>
+  <option value="oldest">Oldest First</option>
+  <option value="priority">Priority: High to Low</option>
+  <option value="status">Status</option>
+</select>
+</div>
+
+      <p id="empty-message">No tickets yet. Create your first ticket!</p>
+      
+<button id="export-tickets-btn" type="button">
+  Export Tickets to CSV
+</button>
+
+      <div id="ticket-list"></div>
+    </section>
+  </main>
+
+  
+<!-- Ticket Details Popup -->
+<div id="ticket-modal" class="ticket-modal" hidden>
+  <div class="ticket-modal-content">
+    <button id="close-modal" class="close-modal" type="button">
+      &times;
+    </button>
+
+    <h2>Ticket Details</h2>
+
+    <div id="ticket-details-content"></div>
+  </div>
+</div>
+
+
+<!-- Edit Ticket Popup -->
+<div id="edit-modal" class="ticket-modal" hidden>
+  <div class="ticket-modal-content">
+    <button id="close-edit-modal" class="close-modal" type="button">
+      &times;
+    </button>
+
+    <h2>Edit Ticket</h2>
+
+    <form id="edit-ticket-form">
+      <label for="edit-full-name">Full Name</label>
+      <input id="edit-full-name" type="text" required>
+
+      <label for="edit-email">Email</label>
+      <input id="edit-email" type="email" required>
+
+      <label for="edit-category">Category</label>
+      <select id="edit-category" required>
+        <option value="Hardware">Hardware</option>
+        <option value="Software">Software</option>
+        <option value="Network">Network</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label for="edit-priority">Priority</label>
+      <select id="edit-priority" required>
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+      </select>
+
+      <label for="edit-description">Description</label>
+      <textarea id="edit-description" required rows="4"></textarea>
+
+      <button type="submit" class="view-details-btn">
+        Save Changes
+      </button>
+
+      <button type="button" id="cancel-edit" class="delete-btn">
+        Cancel
+      </button>
+    </form>
+  </div>
+</div>
+
+ <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="module" src="script.js"></script>
+</body>
+</html>
